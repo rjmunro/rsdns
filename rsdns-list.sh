@@ -52,14 +52,14 @@ function print_records() {
 		get_records
 
 		echo $RECORDS | (
-			echo "Record ID|Type|Name|Data"
+			echo "Record ID|Type|Name|Data|TTL"
 			awk -F, '
 BEGIN { RS = ";" }
 {
   if ($2 ~ "^\"MX")
-    {gsub(/\"/,"") ; print $2 "|" $4 "|" $1 "|" $3, $5}
+    {gsub(/\"/,"") ; print $2 "|" $4 "|" $1 "|" $3, $5 "|" $7}
   else
-    {gsub(/\"/,"") ; print $2 "|" $3 "|" $1 "|" $4}
+    {gsub(/\"/,"") ; print $2 "|" $3 "|" $1 "|" $4 "|" $6}
 }
 			' | sort -t '|' -k 2,3
 		) | column -t -s '|'
